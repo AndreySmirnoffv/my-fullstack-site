@@ -1,7 +1,8 @@
+"use server"
 import Link from 'next/link'; 
 import styles from './navbar.module.scss';
 
-export default function NavBar() {
+export default async function NavBar() {
     return (
         <nav className={styles.navbar}>
             <section className={styles.navbarImage}></section>

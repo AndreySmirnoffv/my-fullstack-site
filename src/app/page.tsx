@@ -1,4 +1,3 @@
-
 import NavBar from "@/components/MainPage/NavBar/NavBar";
 import PortFolio from "@/components/MainPage/Portfolio/Portfolio";
 import ShortDescription from "@/components/MainPage/ShortDescription/ShortDescription";
