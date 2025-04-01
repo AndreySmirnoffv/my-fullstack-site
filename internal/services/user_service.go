@@ -10,6 +10,7 @@ import (
 
 func RegisterUser(db *gorm.DB, user *models.User) error {
 	existingUser, err := repositories.GetUserByEmail(db, user.Email)
+
 	if err != nil && err.Error() != "record not found" {
 		return fmt.Errorf("error checking existing user: %v", err)
 	}
