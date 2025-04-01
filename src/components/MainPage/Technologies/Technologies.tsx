@@ -61,7 +61,7 @@ export default function Technologies() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.technologies_header}>Technologies</h1>
+      <h1 className={styles.technologies}>Technologies</h1>
       <div className={styles.card_container}>
         {skills.map((skill, index) => (
           <SkillCard
