@@ -48,7 +48,7 @@ export default async function PortFolio() {
                     </section>
                 ))}
                 <Link href="/portfolio" className={styles.portfolio_link}>
-                    <button className={styles.portfolio_button}>to Portfolio</button>
+                   Portfolio
                 </Link>
             </section>
         </section>

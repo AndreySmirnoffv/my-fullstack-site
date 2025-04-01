@@ -1,6 +1,6 @@
 $navbar-link-hover-color: #ff7f50;
 
-.wrapper{
+.wrapper {
     text-align: center;
 }
 
@@ -10,6 +10,7 @@ $navbar-link-hover-color: #ff7f50;
     border-bottom: 4px solid white;
     display: inline-block;
     padding-bottom: 10px;
+    margin-bottom: 20px; /* Добавлен отступ снизу для лучшего визуального восприятия */
 }
 
 .content_wrapper {
@@ -60,7 +61,7 @@ $navbar-link-hover-color: #ff7f50;
     max-height: 400px;
 }
 
-.portfolio_link{
+.portfolio_link {
     margin: 0 auto;
     height: 60px;
     width: 160px;
@@ -85,7 +86,6 @@ $navbar-link-hover-color: #ff7f50;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 127, 80, 0.7); /* Увеличенное свечение при наведении */
 }
 
-
 @media (max-width: 932px) {
     .card {
         width: 100%;
@@ -99,7 +99,7 @@ $navbar-link-hover-color: #ff7f50;
     }
 
     .portfolio_header {
-        width: 100%;
+        width: 80%; /* Ширина на мобильных будет чуть больше */
         font-size: 30px;
     }
 }
@@ -117,7 +117,7 @@ $navbar-link-hover-color: #ff7f50;
     }
 
     .portfolio_header {
-        width: 100%;
+        width: 90%;
         font-size: 25px;
     }
 }
