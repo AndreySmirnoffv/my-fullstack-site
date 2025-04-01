@@ -1,0 +1,87 @@
+$primary-color: #ff9900;
+$border-radius: 40px;
+$button-height: 50px;
+$button-width: 200px;
+$contact-button-width: 300px;
+$font-size-head-text: 2.5rem;
+$padding-top-short-description: 0.625rem;
+
+.card {
+  margin: 200px auto;
+  width: 60%;
+}
+
+.head {
+  margin-bottom: 10px;
+}
+
+.head_text {
+  font-size: $font-size-head-text;
+}
+
+.short_description {
+  padding-top: $padding-top-short-description;
+  width: 30%;
+}
+
+.order_contact {
+  display: flex;
+  margin: 30px 0;
+  align-items: center;
+}
+
+.order {
+  padding: 0 10px 0 0;
+}
+
+.order_button,
+.contact_button {
+  padding: 10px;
+  height: $button-height;
+  border-radius: $border-radius;
+  outline: none;
+  cursor: pointer;
+}
+
+.order_button {
+  width: $button-width;
+  border: none;
+  background-color: $primary-color;
+  color: black;
+  font-weight: bold;
+}
+
+.contact_button {
+  width: $contact-button-width;
+  border: 1px solid $primary-color;
+  background-color: transparent;
+}
+
+.contact_tg {
+  color: $primary-color;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 80%;
+  }
+
+  .order_button,
+  .contact_button {
+    width: 100%;
+  }
+
+  .head_text {
+    font-size: 2rem;
+  }
+}
+
+.order_button:hover,
+.contact_button:hover {
+  opacity: 0.8;
+}
+
+.order_button:active,
+.contact_button:active {
+  transform: scale(0.98);
+}
