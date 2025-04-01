@@ -47,6 +47,5 @@ func (ru *RequestUser) ToUser() *User {
 	return &User{
 		Name:     ru.Name,
 		Email:    ru.Email,
-		Password: ru.Password,
 	}
 }
