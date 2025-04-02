@@ -5,6 +5,7 @@ import (
 
 	"github.com/AndreySmirnoffv/my-fullstack-site/internal/models"
 	"github.com/AndreySmirnoffv/my-fullstack-site/internal/repositories"
+	"github.com/AndreySmirnoffv/my-fullstack-site/pkg/utils"
 	"github.com/jinzhu/gorm"
 )
 
@@ -26,7 +27,7 @@ func RegisterUser(db *gorm.DB, user *models.User) (string, error) {
 		return "", err
 	}
 
-	token, err := user.GenerateJWT()
+	token, err := utils.GenerateJWT(user)
 	if err != nil {
 		return "", fmt.Errorf("error generating JWT: %v", err)
 	}
@@ -44,7 +45,7 @@ func LoginUser(db *gorm.DB, email, password string) (string, error) {
 		return "", fmt.Errorf("incorrect password")
 	}
 
-	token, err := user.GenerateJWT()
+	token, err := utils.GenerateJWT(user)
 	if err != nil {
 		return "", fmt.Errorf("error generating JWT: %v", err)
 	}

@@ -52,3 +52,22 @@ func LoginUserHandler(c *gin.Context, db *gorm.DB) {
 		"token":   token,
 	})
 }
+
+func SendVerificationHandler(c *gin.Context) {
+	type Request struct {
+		Email string `json:"email" binding:"required,email"`
+	}
+
+	var req Request
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email format"})
+		return
+	}
+
+	if err := services.SendVerification(req.Email); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send email"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Verification email sent successfully"})
+}

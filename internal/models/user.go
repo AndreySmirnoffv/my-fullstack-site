@@ -1,9 +1,6 @@
 package models
 
 import (
-	"time"
-
-	"github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -36,23 +33,6 @@ func (user *User) HashPassword() error {
 func (user *User) CheckPassword(providedPassword string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(providedPassword))
 	return err == nil
-}
-
-func (user *User) GenerateJWT() (string, error) {
-	claims := &jwt.StandardClaims{
-		Issuer:    "yourapp",
-		Subject:   string(user.ID),
-		ExpiresAt: time.Now().Add(24 * time.Hour).Unix(),
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	tokenString, err := token.SignedString(jwtKey)
-	if err != nil {
-		return "", err
-	}
-
-	return tokenString, nil
 }
 
 func (ru *RequestUser) ToUser() *User {
