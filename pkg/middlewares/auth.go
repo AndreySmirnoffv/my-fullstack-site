@@ -3,14 +3,16 @@ package middlewares
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
-var jwtKey = []byte("your-secret-key")
-
 func VerifyJWTMiddleware() gin.HandlerFunc {
+
+	jwtKey := os.Getenv("JWT_SECRET_KEY")
+
 	return func(c *gin.Context) {
 		tokenString, err := c.Cookie("jwt")
 		if err != nil {
