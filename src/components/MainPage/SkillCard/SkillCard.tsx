@@ -1,7 +1,14 @@
 import React from 'react';
 import styles from './skillcard.module.scss';
 
-const SkillCard = ({ logo, technology, skillLevel, color }) => {
+interface SkillCardProps {
+  logo: string; 
+  technology: string;
+  skillLevel: number;
+  color: string;
+}
+
+const SkillCard: React.FC<SkillCardProps> = ({ logo, technology, skillLevel, color }) => {
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
@@ -13,7 +20,7 @@ const SkillCard = ({ logo, technology, skillLevel, color }) => {
         <div className={styles.skillBar}>
           <div
             className={styles.skillFill}
-            style={{ width: `${skillLevel}%`, backgroundColor: color }} // Используем переданный цвет
+            style={{ width: `${skillLevel}%`, backgroundColor: color }}
           />
         </div>
       </div>
