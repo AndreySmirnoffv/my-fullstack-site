@@ -36,12 +36,6 @@ $nav-item-margin: 40px;
   list-style-type: none;
   margin: 0;
   padding: 0;
-
-  li {
-    display: flex;
-    align-items: center;
-    margin-right: $nav-item-margin;
-  }
 }
 
 .navLink {
@@ -49,6 +43,9 @@ $nav-item-margin: 40px;
   text-decoration: none;
   font-size: $nav-link-font-size;
   transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  margin-right: $nav-item-margin;
 
   &:hover {
     color: $navbar-link-hover-color;
