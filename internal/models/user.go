@@ -57,7 +57,7 @@ func (user *User) GenerateJWT() (string, error) {
 
 func (ru *RequestUser) ToUser() *User {
 	return &User{
-		Name:     *ru.Name,
-		Email:    ru.Email,
+		Name:  *ru.Name,
+		Email: ru.Email,
 	}
 }
