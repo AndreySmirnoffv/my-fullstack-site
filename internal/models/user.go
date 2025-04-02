@@ -1,15 +1,20 @@
 package models
 
 import (
+	"time"
+
+	"github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 )
 
+var jwtKey = []byte("your-secret-key")
+
 type RequestUser struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	ID       int     `json:"id"`
+	Name     *string `json:"name"`
+	Email    string  `json:"email"`
+	Password string  `json:"password"`
 }
 
 type User struct {
@@ -33,19 +38,26 @@ func (user *User) CheckPassword(providedPassword string) bool {
 	return err == nil
 }
 
-func CreateUser(db *gorm.DB, user *User) (*User, error) {
-	if err := user.HashPassword(); err != nil {
-		return nil, err
+func (user *User) GenerateJWT() (string, error) {
+	claims := &jwt.StandardClaims{
+		Issuer:    "yourapp",
+		Subject:   string(user.ID),
+		ExpiresAt: time.Now().Add(24 * time.Hour).Unix(),
 	}
-	if err := db.Create(user).Error; err != nil {
-		return nil, err
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	tokenString, err := token.SignedString(jwtKey)
+	if err != nil {
+		return "", err
 	}
-	return user, nil
+
+	return tokenString, nil
 }
 
 func (ru *RequestUser) ToUser() *User {
 	return &User{
-		Name:     ru.Name,
+		Name:     *ru.Name,
 		Email:    ru.Email,
 		Password: ru.Password,
 	}

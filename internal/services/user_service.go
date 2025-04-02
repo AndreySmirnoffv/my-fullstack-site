@@ -8,16 +8,46 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-func RegisterUser(db *gorm.DB, user *models.User) error {
+func RegisterUser(db *gorm.DB, user *models.User) (string, error) {
 	existingUser, err := repositories.GetUserByEmail(db, user.Email)
-
 	if err != nil && err.Error() != "record not found" {
-		return fmt.Errorf("error checking existing user: %v", err)
+		return "", fmt.Errorf("error checking existing user: %v", err)
 	}
 
 	if existingUser != nil {
-		return fmt.Errorf("user with email %s already exists", user.Email)
+		return "", fmt.Errorf("user with email %s already exists", user.Email)
 	}
 
-	return repositories.SaveUser(db, user)
+	if err := user.HashPassword(); err != nil {
+		return "", fmt.Errorf("error hashing password: %v", err)
+	}
+
+	if err := repositories.SaveUser(db, user); err != nil {
+		return "", err
+	}
+
+	token, err := user.GenerateJWT()
+	if err != nil {
+		return "", fmt.Errorf("error generating JWT: %v", err)
+	}
+
+	return token, nil
+}
+
+func LoginUser(db *gorm.DB, email, password string) (string, error) {
+	user, err := repositories.GetUserByEmail(db, email)
+	if err != nil {
+		return "", fmt.Errorf("error finding user: %v", err)
+	}
+
+	if !user.CheckPassword(password) {
+		return "", fmt.Errorf("incorrect password")
+	}
+
+	token, err := user.GenerateJWT()
+	if err != nil {
+		return "", fmt.Errorf("error generating JWT: %v", err)
+	}
+
+	return token, nil
 }
