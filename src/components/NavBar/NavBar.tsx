@@ -14,7 +14,13 @@ export default async function NavBar() {
                     <li><Link href="/contact" passHref><span className={styles.navLink}>Contacts</span></Link></li>
                 </ul>
             </section>
-            <section className={styles.navbarIcons}></section>
+            <section className={styles.navbarIcons}>
+                <li>
+                    <Link href="/auth/login" passHref>
+                    <span className={styles.navLink}>Login</span>
+                    </Link>
+                </li>
+            </section>
         </nav>
     );
 }
