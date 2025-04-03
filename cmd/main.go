@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/AndreySmirnoffv/my-fullstack-site/internal/models"
 	"github.com/AndreySmirnoffv/my-fullstack-site/internal/routes"
@@ -9,6 +10,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
+	"github.com/rs/cors"
 )
 
 var db *gorm.DB
@@ -27,6 +29,17 @@ func init() {
 
 func main() {
 	r := gin.Default()
+	cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
+		AllowedHeaders:   []string{"*"},
+		ExposedHeaders:   []string{"*"},
+		AllowCredentials: true,
+		MaxAge:           time.Now().Hour() * 12,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "*"
+		},
+	})
 
 	routes.SetupRoutes(r, db)
 
