@@ -3,6 +3,7 @@ package email
 import (
 	"fmt"
 	"math/rand"
+	"os"
 	"time"
 
 	gomail "gopkg.in/mail.v2"
@@ -14,13 +15,15 @@ func GenerateVerificationCode() int {
 }
 
 func SendVerificationEmail(email string, code int) error {
+	EMAIL := os.Getenv("EMAIL")
+	EMAIL_PASSWORD := os.Getenv(EMAIL)
 	message := gomail.NewMessage()
-	message.SetHeader("From", "your-email@gmail.com")
+	message.SetHeader("From", "smirnoffa675@gmail.com")
 	message.SetHeader("To", email)
 	message.SetHeader("Subject", "Verification Code")
 	message.SetBody("text/plain", fmt.Sprintf("Your verification code is: %d", code))
 
-	dialer := gomail.NewDialer("smtp.gmail.com", 587, "your-email@gmail.com", "your-email-password")
+	dialer := gomail.NewDialer("smtp.gmail.com", 587, EMAIL, EMAIL_PASSWORD)
 
 	if err := dialer.DialAndSend(message); err != nil {
 		return err
