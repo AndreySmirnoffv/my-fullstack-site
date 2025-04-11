@@ -1,50 +1,37 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net/http"
 
+	"github.com/AndreySmirnoffv/my-fullstack-site/internal/infrastructure/redis"
 	"github.com/AndreySmirnoffv/my-fullstack-site/internal/models"
 	"github.com/AndreySmirnoffv/my-fullstack-site/internal/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/redis/go-redis/v9"
 	"github.com/rs/cors"
 )
 
 var (
 	db          *gorm.DB
 	err         error
-	redisClient *redis.Client
+	redisClient = redis.InitRedis()
 )
 
 func init() {
 	initDB()
-	initRedis()
+	redis.InitRedis()
 }
 
 func initDB() {
 	dsn := "user=postgres password=postgres dbname=go sslmode=disable"
 	db, err = gorm.Open("postgres", dsn)
+
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 	}
 	db.AutoMigrate(&models.User{})
-}
-
-func initRedis() {
-	redisClient = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "",
-		DB:       0,
-	})
-
-	if err := redisClient.Ping(context.Background()).Err(); err != nil {
-		log.Fatalf("failed to connect to Redis: %v", err)
-	}
-	log.Println("Redis connected successfully")
 }
 
 func main() {
